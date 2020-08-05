@@ -137,13 +137,13 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>20.0</version>
+            <version>[24.1.1,)</version>
         </dependency>
-        <dependency>
-            <groupId>com.github.wxiaoqi</groupId>
-            <artifactId>ace-cache</artifactId>
-            <version>0.0.2</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.github.wxiaoqi</groupId>-->
+<!--            <artifactId>ace-cache</artifactId>-->
+<!--            <version>0.0.2</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
@@ -176,7 +176,13 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>5.1.4.RELEASE</version>
+            <version>5.2.6.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.whvcse</groupId>
+            <artifactId>easy-captcha</artifactId>
+            <version>1.6.2</version>
         </dependency>
 
     </dependencies>

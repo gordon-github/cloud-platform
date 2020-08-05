@@ -15,5 +15,6 @@
         <module>ace-admin</module>
         <module>ace-generator</module>
         <module>ace-tool</module>
+        <module>ace-nlp</module>
     </modules>
 </project>

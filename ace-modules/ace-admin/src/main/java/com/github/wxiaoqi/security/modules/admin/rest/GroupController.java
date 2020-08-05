@@ -39,9 +39,9 @@ public class GroupController extends BaseController<GroupBiz, Group> {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
-    public List<Group> list(String name,String groupType) {
+    public ObjectRestResponse<List<Group>> list(String name,String groupType) {
         if(StringUtils.isBlank(name)&&StringUtils.isBlank(groupType)) {
-            return new ArrayList<Group>();
+            return new ObjectRestResponse<>().data(new ArrayList<Group>());
         }
         Example example = new Example(Group.class);
         if (StringUtils.isNotBlank(name)) {
@@ -51,7 +51,7 @@ public class GroupController extends BaseController<GroupBiz, Group> {
             example.createCriteria().andEqualTo("groupType", groupType);
         }
 
-        return baseBiz.selectByExample(example);
+        return new ObjectRestResponse().data(baseBiz.selectByExample(example));
     }
 
 
@@ -60,13 +60,13 @@ public class GroupController extends BaseController<GroupBiz, Group> {
     @ResponseBody
     public ObjectRestResponse modifiyUsers(@PathVariable int id,String members,String leaders){
         baseBiz.modifyGroupUsers(id, members, leaders);
-        return new ObjectRestResponse().rel(true);
+        return new ObjectRestResponse();
     }
 
     @RequestMapping(value = "/{id}/user", method = RequestMethod.GET)
     @ResponseBody
     public ObjectRestResponse<GroupUsers> getUsers(@PathVariable int id){
-        return new ObjectRestResponse<GroupUsers>().rel(true).data(baseBiz.getGroupUsers(id));
+        return new ObjectRestResponse<GroupUsers>().data(baseBiz.getGroupUsers(id));
     }
 
     @RequestMapping(value = "/{id}/authority/menu", method = RequestMethod.PUT)
@@ -74,41 +74,41 @@ public class GroupController extends BaseController<GroupBiz, Group> {
     public ObjectRestResponse modifyMenuAuthority(@PathVariable  int id, String menuTrees){
         String [] menus = menuTrees.split(",");
         baseBiz.modifyAuthorityMenu(id, menus);
-        return new ObjectRestResponse().rel(true);
+        return new ObjectRestResponse();
     }
 
     @RequestMapping(value = "/{id}/authority/menu", method = RequestMethod.GET)
     @ResponseBody
     public ObjectRestResponse<List<AuthorityMenuTree>> getMenuAuthority(@PathVariable  int id){
-        return new ObjectRestResponse().data(baseBiz.getAuthorityMenu(id)).rel(true);
+        return new ObjectRestResponse().data(baseBiz.getAuthorityMenu(id));
     }
 
     @RequestMapping(value = "/{id}/authority/element/add", method = RequestMethod.PUT)
     @ResponseBody
     public ObjectRestResponse addElementAuthority(@PathVariable  int id,int menuId, int elementId){
         baseBiz.modifyAuthorityElement(id,menuId,elementId);
-        return new ObjectRestResponse().rel(true);
+        return new ObjectRestResponse();
     }
 
     @RequestMapping(value = "/{id}/authority/element/remove", method = RequestMethod.PUT)
     @ResponseBody
     public ObjectRestResponse removeElementAuthority(@PathVariable int id,int menuId, int elementId){
         baseBiz.removeAuthorityElement(id,menuId,elementId);
-        return new ObjectRestResponse().rel(true);
+        return new ObjectRestResponse();
     }
 
     @RequestMapping(value = "/{id}/authority/element", method = RequestMethod.GET)
     @ResponseBody
     public ObjectRestResponse<List<Integer>> getElementAuthority(@PathVariable  int id){
-        return new ObjectRestResponse().data(baseBiz.getAuthorityElement(id)).rel(true);
+        return new ObjectRestResponse().data(baseBiz.getAuthorityElement(id));
     }
 
 
     @RequestMapping(value = "/tree", method = RequestMethod.GET)
     @ResponseBody
-    public List<GroupTree> tree(String name, String groupType) {
+    public ObjectRestResponse<List<GroupTree>> tree(String name, String groupType) {
         if(StringUtils.isBlank(name)&&StringUtils.isBlank(groupType)) {
-            return new ArrayList<GroupTree>();
+            return new ObjectRestResponse<>().data(new ArrayList<GroupTree>());
         }
         Example example = new Example(Group.class);
         if (StringUtils.isNotBlank(name)) {
@@ -117,7 +117,7 @@ public class GroupController extends BaseController<GroupBiz, Group> {
         if (StringUtils.isNotBlank(groupType)) {
             example.createCriteria().andEqualTo("groupType", groupType);
         }
-        return  getTree(baseBiz.selectByExample(example), AdminCommonConstant.ROOT);
+        return  new ObjectRestResponse<>().data(getTree(baseBiz.selectByExample(example), AdminCommonConstant.ROOT));
     }
 
 
